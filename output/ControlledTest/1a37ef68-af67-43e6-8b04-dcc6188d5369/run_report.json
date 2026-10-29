@@ -1,0 +1,145 @@
+{
+  "run_id": "1a37ef68-af67-43e6-8b04-dcc6188d5369",
+  "timestamp_iso": "2026-05-18T12:27:49.350481+00:00",
+  "artifact_version": "V4",
+  "run_mode": "controlled",
+  "topic": "Circular Economy",
+  "domain": "other",
+  "corpus_profile": "natural",
+  "dr1": {
+    "lens_count": 4,
+    "lens_titles": [
+      "Material Metabolism and Flow",
+      "Value Extraction and Ownership",
+      "Waste-Labor Precarity",
+      "Biotic-Technical Co-evolution"
+    ],
+    "lens_embeddings_model": "scibert-scivocab-uncased",
+    "pairwise_cosine": [
+      [
+        1.0,
+        0.8856,
+        0.8519,
+        0.877
+      ],
+      [
+        0.8856,
+        1.0,
+        0.8664,
+        0.851
+      ],
+      [
+        0.8519,
+        0.8664,
+        1.0,
+        0.8202
+      ],
+      [
+        0.877,
+        0.851,
+        0.8202,
+        1.0
+      ]
+    ],
+    "mean_pairwise_cosine": 0.8587,
+    "max_pairwise_cosine": 0.8856,
+    "min_pairwise_cosine": 0.8202,
+    "lens_jaccard_term_overlap": 0.0,
+    "lens_traditions_declared": [
+      "Industrial Ecology",
+      "Political Economy",
+      "Critical Geography / Sociology",
+      "Cradle-to-Cradle / Biomimicry"
+    ],
+    "fallback_executed": false
+  },
+  "dr2": {
+    "edge_type_counts": {
+      "constructive": 6,
+      "critical": 3,
+      "rhizomatic": 2
+    },
+    "edge_type_ratios": {
+      "constructive": 0.5455,
+      "critical": 0.2727,
+      "rhizomatic": 0.1818
+    },
+    "has_critical_edges": true,
+    "has_rhizomatic_edges": true,
+    "edge_type_entropy": 1.4354,
+    "edges_with_provenance": 11,
+    "edges_total": 11,
+    "provenance_completeness": 1.0
+  },
+  "dr3": {
+    "centralization_metric": 0.3636,
+    "rupture_trigger": true,
+    "rupture_trigger_expected": null,
+    "trigger_latency_s": null,
+    "post_trigger_sources_added": 10,
+    "post_trigger_centralization": null
+  },
+  "dr4": {
+    "llm_recruitment_path_executed": true,
+    "deterministic_fallback_executed": false,
+    "fallback_trigger_reason": "none",
+    "fallback_latency_s": null,
+    "sources_added_by_path": {
+      "llm": 10,
+      "deterministic": 0
+    },
+    "every_added_source_has_recruitment_path_provenance": true
+  },
+  "dr5": {
+    "umap_params": {
+      "n_neighbors": 15,
+      "min_dist": 0.1,
+      "n_components": 2
+    },
+    "hdbscan_params": {
+      "min_cluster_size": 5
+    },
+    "clusters_detected": 2,
+    "semantic_voids_detected": 0,
+    "orthogonal_isolations": 1,
+    "marginalization_index": 1,
+    "rendered_ui_tabs": [
+      "entry",
+      "modules",
+      "resonance",
+      "assemblage",
+      "cartography",
+      "graph",
+      "topography"
+    ],
+    "all_seven_tabs_populated": true
+  },
+  "dr6": {
+    "provenance_completeness": 1.0,
+    "centralization_warning_fired": false,
+    "centralization_warning_expected": null,
+    "centralization_threshold": 0.4,
+    "auditable_metadata_schema_version": "1.0",
+    "audit_log_path": "output/runs/1a37ef68-af67-43e6-8b04-dcc6188d5369/audit.log"
+  },
+  "run_level": {
+    "total_runtime_s": 257.6,
+    "tokens_prompt": null,
+    "tokens_completion": null,
+    "tokens_total": null,
+    "neo4j_persistence_ok": false,
+    "phases_completed": 9,
+    "agents_invoked": 9,
+    "errors": []
+  },
+  "verdict": {
+    "dr1": "FAIL",
+    "dr2": "PASS",
+    "dr3": "OBSERVATIONAL",
+    "dr4": "OBSERVATIONAL",
+    "dr5": "DEGRADED",
+    "dr6": "PASS",
+    "overall": "FAIL",
+    "verdict_basis": "DR1–DR6 evaluation thresholds, Serrano et al. (2026)"
+  }
+}

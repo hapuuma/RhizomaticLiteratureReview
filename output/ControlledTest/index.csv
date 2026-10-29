@@ -1,0 +1,5 @@
+run_id,artifact_version,run_mode,corpus_profile,topic,domain,overall_verdict,timestamp_iso
+8638f74a-6d46-4aca-aecc-723c9f54f66d,V4,controlled,natural,Consulting service development with modularity,other,FAIL,2026-05-14T15:55:08.878076+00:00
+6ccf1885-079c-45d7-82e1-31fa2757533e,V4,controlled,natural,AI management,other,FAIL,2026-05-18T11:26:24.810799+00:00
+1a37ef68-af67-43e6-8b04-dcc6188d5369,V4,controlled,natural,Circular Economy,other,FAIL,2026-05-18T12:27:49.350481+00:00
+cc13ea96-b868-4a6f-8199-456aa21b57a3,V4,controlled,natural,information systems AI workforce,other,FAIL,2026-05-18T17:15:53.370768+00:00

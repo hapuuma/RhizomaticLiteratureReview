@@ -1,0 +1,45 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Environments
+.venv/
+.venv_linux/
+venv/
+ENV/
+env.bak/
+env/
+
+# IDEs
+.vscode/
+.idea/
+
+# Backend env
+backend/.env
+backend/__pycache__/
+backend/api/__pycache__/
+backend/pipeline/__pycache__/
+backend/database/__pycache__/
+backend/api/__pycache__/
+
+# Logs and databases
+*.log
+*.sqlite
+*.db
+backend/data/abs_journals.json
+backend/data/
+backend/models/
+
+# Build artefacts (executable is published as a GitHub Release)
+build/
+backend/build/
+dist/
+*.exe
+backend/RhizomaticAgent.spec
+
+# OS
+.DS_Store

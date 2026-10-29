@@ -1,0 +1,145 @@
+{
+  "run_id": "6ccf1885-079c-45d7-82e1-31fa2757533e",
+  "timestamp_iso": "2026-05-18T11:26:24.810799+00:00",
+  "artifact_version": "V4",
+  "run_mode": "controlled",
+  "topic": "AI management",
+  "domain": "other",
+  "corpus_profile": "natural",
+  "dr1": {
+    "lens_count": 4,
+    "lens_titles": [
+      "Algorithmic Coordination of Human Agency",
+      "Asymmetric Information and Power Distribution",
+      "Cognitive Offloading and Managerial Atrophy",
+      "Affective Labor in Human-AI Dyads"
+    ],
+    "lens_embeddings_model": "scibert-scivocab-uncased",
+    "pairwise_cosine": [
+      [
+        1.0,
+        0.8499,
+        0.9116,
+        0.8896
+      ],
+      [
+        0.8499,
+        1.0,
+        0.8697,
+        0.7864
+      ],
+      [
+        0.9116,
+        0.8697,
+        1.0,
+        0.8604
+      ],
+      [
+        0.8896,
+        0.7864,
+        0.8604,
+        1.0
+      ]
+    ],
+    "mean_pairwise_cosine": 0.8613,
+    "max_pairwise_cosine": 0.9116,
+    "min_pairwise_cosine": 0.7864,
+    "lens_jaccard_term_overlap": 0.0,
+    "lens_traditions_declared": [
+      "Sociotechnical Systems Theory",
+      "Political Economy",
+      "Cognitive Psychology",
+      "Affect Theory"
+    ],
+    "fallback_executed": false
+  },
+  "dr2": {
+    "edge_type_counts": {
+      "constructive": 7,
+      "critical": 3,
+      "rhizomatic": 2
+    },
+    "edge_type_ratios": {
+      "constructive": 0.5833,
+      "critical": 0.25,
+      "rhizomatic": 0.1667
+    },
+    "has_critical_edges": true,
+    "has_rhizomatic_edges": true,
+    "edge_type_entropy": 1.3844,
+    "edges_with_provenance": 12,
+    "edges_total": 12,
+    "provenance_completeness": 1.0
+  },
+  "dr3": {
+    "centralization_metric": 0.375,
+    "rupture_trigger": true,
+    "rupture_trigger_expected": null,
+    "trigger_latency_s": null,
+    "post_trigger_sources_added": 10,
+    "post_trigger_centralization": null
+  },
+  "dr4": {
+    "llm_recruitment_path_executed": true,
+    "deterministic_fallback_executed": false,
+    "fallback_trigger_reason": "none",
+    "fallback_latency_s": null,
+    "sources_added_by_path": {
+      "llm": 10,
+      "deterministic": 0
+    },
+    "every_added_source_has_recruitment_path_provenance": true
+  },
+  "dr5": {
+    "umap_params": {
+      "n_neighbors": 15,
+      "min_dist": 0.1,
+      "n_components": 2
+    },
+    "hdbscan_params": {
+      "min_cluster_size": 5
+    },
+    "clusters_detected": 2,
+    "semantic_voids_detected": 0,
+    "orthogonal_isolations": 1,
+    "marginalization_index": 2,
+    "rendered_ui_tabs": [
+      "entry",
+      "modules",
+      "resonance",
+      "assemblage",
+      "cartography",
+      "graph",
+      "topography"
+    ],
+    "all_seven_tabs_populated": true
+  },
+  "dr6": {
+    "provenance_completeness": 1.0,
+    "centralization_warning_fired": false,
+    "centralization_warning_expected": null,
+    "centralization_threshold": 0.4,
+    "auditable_metadata_schema_version": "1.0",
+    "audit_log_path": "output/runs/6ccf1885-079c-45d7-82e1-31fa2757533e/audit.log"
+  },
+  "run_level": {
+    "total_runtime_s": 212.4,
+    "tokens_prompt": null,
+    "tokens_completion": null,
+    "tokens_total": null,
+    "neo4j_persistence_ok": false,
+    "phases_completed": 9,
+    "agents_invoked": 9,
+    "errors": []
+  },
+  "verdict": {
+    "dr1": "FAIL",
+    "dr2": "PASS",
+    "dr3": "OBSERVATIONAL",
+    "dr4": "OBSERVATIONAL",
+    "dr5": "DEGRADED",
+    "dr6": "PASS",
+    "overall": "FAIL",
+    "verdict_basis": "DR1–DR6 evaluation thresholds, Serrano et al. (2026)"
+  }
+}

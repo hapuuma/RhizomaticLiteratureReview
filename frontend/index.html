@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rhizomatic Research Agent</title>
+  <meta name="description" content="A process-relational literature research agent — tracing becomings across any phenomenon zone, not retrieving facts." />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://d3js.org https://cdn.plot.ly https://fonts.googleapis.com https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://d3js.org https://cdn.plot.ly; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' http://localhost:* https://api.semanticscholar.org https://api.crossref.org https://api.openalex.org; media-src 'self' blob:;">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+<body>
+  <!-- Ambient background -->
+  <div class="bg-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div class="app-shell">
+
+    <!-- ── Header ─────────────────────────────────────────────── -->
+    <header class="app-header">
+      <div class="header-brand">
+        <span class="brand-glyph">⬡</span>
+        <div>
+          <h1 class="brand-title">Rhizomatic Research Agent</h1>
+          <p class="brand-sub">Literature Research Agent · Process-Relational Ontology</p>
+        </div>
+      </div>
+      <div class="header-status" id="statusIndicator">
+        <span class="status-dot" id="statusDot"></span>
+        <span class="status-label" id="statusLabel">Ready</span>
+      </div>
+    </header>
+
+    <!-- ── Query Input ─────────────────────────────────────────── -->
+    <section class="query-section">
+      <div class="query-card glass">
+        <label class="query-label" for="queryInput">Phenomenon Zone</label>
+        <div class="query-row">
+          <textarea
+            id="queryInput"
+            class="query-textarea"
+            rows="2"
+            placeholder="Enter a phenomenon zone to traverse, e.g. 'platform governance and algorithmic enclosure in gig economies'…"
+            spellcheck="false"
+          ></textarea>
+          <button class="traverse-btn" id="traverseBtn" onclick="startTraversal()">
+            <span class="btn-icon">◈</span>
+            <span class="btn-text">Traverse</span>
+          </button>
+        </div>
+        <div class="query-meta">
+          <span class="meta-chip" id="sourceCountChip">— sources</span>
+          <span class="meta-chip" id="modelChip">Loading model…</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Lens Configuration ────────────────────────────────────── -->
+    <section class="lens-section glass" id="lensSection">
+      <div class="lens-section-header">
+        <div class="lens-section-title">
+          <span class="lens-section-icon">◈</span>
+          <span>Theoretical Lenses</span>
+          <span class="lens-count-badge" id="lensCountBadge"></span>
+        </div>
+        <div class="lens-section-controls">
+          <label class="lens-auto-label" title="When ON: pressing Traverse auto-generates lenses from your query first, then runs. When OFF: Traverse uses the lenses shown here as-is.">
+            <input type="checkbox" id="lensAutoGenerate" checked>
+            <span class="lens-auto-text">Auto on Traverse</span>
+          </label>
+          <button class="btn-gen-lenses" id="genLensesBtn" onclick="generateLenses()">
+            ◈ Propose Lenses
+          </button>
+        </div>
+      </div>
+
+      <div class="lens-generating" id="lensGenerating" hidden>
+        <div class="lens-spinner"></div>
+        <span>Generating theoretical lenses…</span>
+      </div>
+
+      <div class="lens-cards-grid" id="lensCardsGrid"></div>
+
+      <button class="btn-add-lens" onclick="addBlankLens()">+ Add Lens</button>
+    </section>
+
+    <!-- ── Run Configuration ─────────────────────────────────────── -->
+    <details class="run-config glass" id="runConfigDetails">
+      <summary class="run-config-summary">
+        <span>Run Configuration</span>
+        <span class="run-config-hint">optional — fills evaluation metadata</span>
+      </summary>
+      <div class="run-config-fields">
+        <label class="run-config-field">
+          <span class="run-config-label">Run Mode</span>
+          <select class="run-config-select" id="runMode">
+            <option value="controlled">Controlled</option>
+            <option value="interview">Interview</option>
+          </select>
+        </label>
+        <label class="run-config-field">
+          <span class="run-config-label">Domain</span>
+          <select class="run-config-select" id="runDomain">
+            <option value="other">Other</option>
+            <option value="IS">IS</option>
+            <option value="management">Management</option>
+            <option value="sustainability">Sustainability</option>
+            <option value="AI_governance">AI Governance</option>
+            <option value="org_learning">Org Learning</option>
+          </select>
+        </label>
+        <label class="run-config-field">
+          <span class="run-config-label">Corpus Profile</span>
+          <select class="run-config-select" id="corpusProfile">
+            <option value="natural">Natural</option>
+            <option value="convergent">Convergent</option>
+            <option value="heterodox">Heterodox</option>
+            <option value="centralized">Centralized</option>
+            <option value="llm_suppressed">LLM Suppressed</option>
+          </select>
+        </label>
+      </div>
+    </details>
+
+    <!-- ── Pipeline Progress ───────────────────────────────────── -->
+    <div class="pipeline-bar glass" id="pipelineBar" aria-hidden="true">
+      <div class="pipeline-stages">
+        <div class="stage-node" id="stage-epistemology" data-label="Lenses">
+          <div class="stage-dot"></div><span>Lenses</span>
+        </div>
+        <div class="stage-connector"></div>
+        <div class="stage-node" id="stage-search" data-label="Search">
+          <div class="stage-dot"></div><span>Search</span>
+        </div>
+        <div class="stage-connector"></div>
+        <div class="stage-node" id="stage-abs_check" data-label="Screen">
+          <div class="stage-dot"></div><span>Screen</span>
+        </div>
+        <div class="stage-connector"></div>
+        <div class="stage-node" id="stage-entry" data-label="Entry">
+          <div class="stage-dot"></div><span>Entry</span>
+        </div>
+        <div class="stage-connector"></div>
+        <div class="stage-node" id="stage-modules" data-label="Modules">
+          <div class="stage-dot"></div><span>Modules</span>
+        </div>
+        <div class="stage-connector"></div>
+        <div class="stage-node" id="stage-resonance" data-label="Resonance">
+          <div class="stage-dot"></div><span>Resonance</span>
+        </div>
+        <div class="stage-connector"></div>
+        <div class="stage-node" id="stage-assemblage" data-label="Assemblage">
+          <div class="stage-dot"></div><span>Assemblage</span>
+        </div>
+        <div class="stage-connector"></div>
+        <div class="stage-node" id="stage-graph" data-label="Graph">
+          <div class="stage-dot"></div><span>Graph</span>
+        </div>
+        <div class="stage-connector"></div>
+        <div class="stage-node" id="stage-topography" data-label="Topology">
+          <div class="stage-dot"></div><span>Topology</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Five-Tab Output ─────────────────────────────────────── -->
+    <main class="output-section" id="outputSection">
+
+      <nav class="tab-nav" role="tablist" aria-label="Pipeline output tabs">
+        <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-entry" id="btn-entry" onclick="switchTab('entry')">
+          <span class="tab-icon">⬡</span> Entry
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-modules" id="btn-modules" onclick="switchTab('modules')">
+          <span class="tab-icon">◈</span> Modules
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-resonance" id="btn-resonance" onclick="switchTab('resonance')">
+          <span class="tab-icon">⊕</span> Resonance
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-assemblage" id="btn-assemblage" onclick="switchTab('assemblage')">
+          <span class="tab-icon">◉</span> Assemblage
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-cartography" id="btn-cartography" onclick="switchTab('cartography')">
+          <span class="tab-icon">⊗</span> Cartography
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-graph" id="btn-graph" onclick="switchTab('graph')">
+          <span class="tab-icon">◰</span> Graph
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-topography" id="btn-topography" onclick="switchTab('topography')">
+          <span class="tab-icon">⬟</span> Topology
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-history" id="btn-history" onclick="switchTab('history')">
+          <span class="tab-icon">◷</span> History
+        </button>
+      </nav>
+
+      <!-- ── TTS Bar ──────────────────────────────────────────── -->
+      <div class="tts-bar glass" id="ttsBar" hidden>
+        <div class="tts-controls">
+          <button class="tts-btn" id="ttsPlayBtn" onclick="ttsPlay()" title="Play">▶</button>
+          <button class="tts-btn" id="ttsPauseBtn" onclick="ttsPause()" title="Pause/Resume" disabled>⏸</button>
+          <button class="tts-btn" id="ttsStopBtn" onclick="ttsStop()" title="Stop" disabled>■</button>
+          <div class="tts-divider"></div>
+          <button class="tts-btn" id="ttsAutoBtn" onclick="ttsToggleAuto()" title="Auto-read OFF" style="font-size:0.65rem;width:auto;padding:0 8px;letter-spacing:0.06em">AUTO</button>
+          <div class="tts-divider"></div>
+          <select class="tts-voice-select" id="ttsVoiceSelect">
+            <option value="af_bella">Bella · US ♀</option>
+            <option value="af_nicole" selected>Nicole · US ♀</option>
+            <option value="af_sarah">Sarah · US ♀</option>
+            <option value="af_sky">Sky · US ♀</option>
+            <option value="am_adam">Adam · US ♂</option>
+            <option value="am_michael">Michael · US ♂</option>
+            <option value="bf_emma">Emma · UK ♀</option>
+            <option value="bf_isabella">Isabella · UK ♀</option>
+            <option value="bm_george">George · UK ♂</option>
+            <option value="bm_lewis">Lewis · UK ♂</option>
+          </select>
+          <span class="tts-status" id="ttsStatus">Kokoro TTS</span>
+        </div>
+      </div>
+
+      <div class="tab-content-wrapper">
+
+        <!-- Tab 1: Entry -->
+        <div class="tab-panel active" id="tab-entry" role="tabpanel" aria-labelledby="btn-entry">
+          <div class="panel-placeholder" id="entry-placeholder">
+            <div class="placeholder-icon">⬡</div>
+            <p>The Entry Layer will map active entry points into the phenomenon zone once you begin traversal.</p>
+          </div>
+          <div class="panel-content" id="entry-content" hidden></div>
+        </div>
+
+        <!-- Tab 2: Modules -->
+        <div class="tab-panel" id="tab-modules" role="tabpanel" aria-labelledby="btn-modules">
+          <div class="panel-placeholder" id="modules-placeholder">
+            <div class="placeholder-icon">◈</div>
+            <p>Three parallel potentiality modules — Innovation Commons, Complexity & Assemblage, and Material & Infrastructural Flows — will process your literature corpus simultaneously through orthogonal lenses.</p>
+          </div>
+          <div class="panel-content" id="modules-content" hidden></div>
+        </div>
+
+        <!-- Tab 3: Resonance -->
+        <div class="tab-panel" id="tab-resonance" role="tabpanel" aria-labelledby="btn-resonance">
+          <div class="panel-placeholder" id="resonance-placeholder">
+            <div class="placeholder-icon">⊕</div>
+            <p>The Resonance Detector will surface convergent anomalies — where incompatible disciplinary frameworks independently encounter the same unexplained phenomenon.</p>
+          </div>
+          <div class="panel-content" id="resonance-content" hidden></div>
+        </div>
+
+        <!-- Tab 4: Assemblage -->
+        <div class="tab-panel" id="tab-assemblage" role="tabpanel" aria-labelledby="btn-assemblage">
+          <div class="panel-placeholder" id="assemblage-placeholder">
+            <div class="placeholder-icon">◉</div>
+            <p>The Assemblage Builder will synthesize provisional constellations of becoming — in strict present-continuous tense — tracing what is emerging without resolving it.</p>
+          </div>
+          <div class="panel-content" id="assemblage-content" hidden></div>
+        </div>
+
+        <!-- Tab 5: Cartography -->
+        <div class="tab-panel" id="tab-cartography" role="tabpanel" aria-labelledby="btn-cartography">
+          <div class="panel-placeholder" id="cartography-placeholder">
+            <div class="placeholder-icon">⊗</div>
+            <p>The Cartographic Output will map sources, module directions, convergence nodes, and lines of flight across the research field.</p>
+          </div>
+          <div class="panel-content" id="cartography-content" hidden></div>
+        </div>
+        <!-- Tab 7: Topography -->
+        <div class="tab-panel" id="tab-topography" role="tabpanel" aria-labelledby="btn-topography">
+          <div class="panel-placeholder" id="topography-placeholder">
+            <div class="placeholder-icon">⬟</div>
+            <p>The Semantic Topography Engine uses SciBERT embeddings to map the mathematical landscape of the literature — identifying Semantic Voids, Orthogonal Isolations, and Marginalization patterns.<br><em>Requires BERT_ENABLED=true and dependencies installed.</em></p>
+          </div>
+          <div class="panel-content" id="topography-content" hidden></div>
+        </div>
+
+        <!-- Tab 6: Graph -->
+        <div class="tab-panel" id="tab-graph" role="tabpanel" aria-labelledby="btn-graph">
+          <div class="panel-placeholder" id="graph-placeholder">
+            <div class="placeholder-icon">◰</div>
+            <p>The Relationship Graph will map the intensive connections and lines of flight as an interactive animated topology.</p>
+          </div>
+          <div class="panel-content" id="graph-content" hidden>
+            <div class="graph-header">
+              <h2 style="color:var(--clr-accent-1); margin:0 0 5px 0; font-size:1.2rem">Rhizomatic Relationship Topology</h2>
+              <p style="color:var(--clr-text-muted); font-size:0.85rem; margin:0">Explore the intensive connections between actors, concepts, and tensions.</p>
+            </div>
+            <div id="graph-viewport" style="width:100%; height:500px; background:rgba(0,0,0,0.2); border-radius:var(--radius-md); margin-top:20px; position:relative">
+              <svg id="rhizome-svg" style="width:100%; height:100%"></svg>
+            </div>
+            <div id="node-info-overlay" class="glass-card hidden" style="position:absolute; top:20px; right:20px; width:280px; z-index:100; border:1px solid rgba(255,255,255,0.1); padding:20px">
+              <button class="close-overlay" onclick="closeNodeInfo()" style="position:absolute; top:10px; right:10px; background:none; border:none; color:var(--clr-text-dim); cursor:pointer">✕</button>
+              <div class="overlay-body">
+                <h3 id="overlay-title" style="margin:0 0 8px 0; color:var(--clr-accent-1); font-size:1rem">Node Title</h3>
+                <div class="overlay-tag" id="overlay-type" style="display:inline-block; padding:2px 8px; background:rgba(255,255,255,0.08); border-radius:4px; font-size:0.65rem; text-transform:uppercase; margin-bottom:12px">Type</div>
+                <p id="overlay-desc" style="font-size:0.82rem; line-height:1.6; color:var(--clr-text-muted); margin-bottom:0">Description</p>
+                <div class="overlay-meta" style="font-size:0.7rem; color:var(--clr-text-dim); margin-top:15px; border-top:1px solid rgba(255,255,255,0.05); padding-top:12px">
+                  Intensity: <span id="overlay-intensity">0.0</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Tab: History -->
+        <div class="tab-panel" id="tab-history" role="tabpanel" aria-labelledby="btn-history">
+          <div class="panel-placeholder" id="history-placeholder">
+            <div class="placeholder-icon">◷</div>
+            <p>Past pipeline runs are saved here automatically. Click a run to re-view its full output.</p>
+          </div>
+          <div class="panel-content" id="history-content" hidden></div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- ── Error Toast ─────────────────────────────────────────── -->
+    <div class="error-toast glass" id="errorToast" hidden>
+      <span class="error-icon">⚠</span>
+      <span id="errorMessage"></span>
+      <button onclick="dismissError()" class="error-close">✕</button>
+    </div>
+
+  </div>
+
+  <!-- ── Run Report Notice ──────────────────────────────────────── -->
+  <div class="run-report-notice glass" id="runReportNotice" hidden>
+    <span class="run-report-icon">◈</span>
+    <div class="run-report-text">
+      <strong>Evaluation report saved</strong>
+      <span id="runReportPath"></span>
+    </div>
+    <button onclick="dismissRunReport()" class="error-close">✕</button>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+{
+  "run_id": "643ad140-ec65-4fcc-bef5-9e49c4c77215",
+  "timestamp_iso": "2026-05-14T15:34:23.753812+00:00",
+  "artifact_version": "V4",
+  "run_mode": "controlled",
+  "topic": "Platform identity in large companies",
+  "domain": "other",
+  "corpus_profile": "natural",
+  "dr1": {
+    "lens_count": 4,
+    "lens_titles": [
+      "Internal Sovereignty and Boundary Disputes",
+      "The Standardization vs. Customization Friction",
+      "Invisible Labor of Platform Maintenance",
+      "Semiotic Drift of 'The Platform'"
+    ],
+    "lens_embeddings_model": "scibert-scivocab-uncased",
+    "pairwise_cosine": [
+      [
+        1.0,
+        0.7985,
+        0.7858,
+        0.831
+      ],
+      [
+        0.7985,
+        1.0,
+        0.8827,
+        0.9006
+      ],
+      [
+        0.7858,
+        0.8827,
+        1.0,
+        0.8765
+      ],
+      [
+        0.831,
+        0.9006,
+        0.8765,
+        1.0
+      ]
+    ],
+    "mean_pairwise_cosine": 0.8458,
+    "max_pairwise_cosine": 0.9006,
+    "min_pairwise_cosine": 0.7858,
+    "lens_jaccard_term_overlap": 0.0,
+    "lens_traditions_declared": [
+      "Political Sociology",
+      "Cybernetics / Systems Theory",
+      "Critical Infrastructure Studies",
+      "Discursive Analysis"
+    ],
+    "fallback_executed": false
+  },
+  "dr2": {
+    "edge_type_counts": {
+      "constructive": 8,
+      "critical": 1,
+      "rhizomatic": 2
+    },
+    "edge_type_ratios": {
+      "constructive": 0.7273,
+      "critical": 0.0909,
+      "rhizomatic": 0.1818
+    },
+    "has_critical_edges": true,
+    "has_rhizomatic_edges": true,
+    "edge_type_entropy": 1.0958,
+    "edges_with_provenance": 11,
+    "edges_total": 11,
+    "provenance_completeness": 1.0
+  },
+  "dr3": {
+    "centralization_metric": 0.4091,
+    "rupture_trigger": true,
+    "rupture_trigger_expected": null,
+    "trigger_latency_s": null,
+    "post_trigger_sources_added": 10,
+    "post_trigger_centralization": null
+  },
+  "dr4": {
+    "llm_recruitment_path_executed": true,
+    "deterministic_fallback_executed": false,
+    "fallback_trigger_reason": "none",
+    "fallback_latency_s": null,
+    "sources_added_by_path": {
+      "llm": 10,
+      "deterministic": 0
+    },
+    "every_added_source_has_recruitment_path_provenance": true
+  },
+  "dr5": {
+    "umap_params": {
+      "n_neighbors": 15,
+      "min_dist": 0.1,
+      "n_components": 2
+    },
+    "hdbscan_params": {
+      "min_cluster_size": 5
+    },
+    "clusters_detected": 2,
+    "semantic_voids_detected": 0,
+    "orthogonal_isolations": 0,
+    "marginalization_index": 3,
+    "rendered_ui_tabs": [
+      "entry",
+      "modules",
+      "resonance",
+      "assemblage",
+      "cartography",
+      "graph",
+      "topography"
+    ],
+    "all_seven_tabs_populated": true
+  },
+  "dr6": {
+    "provenance_completeness": 1.0,
+    "centralization_warning_fired": true,
+    "centralization_warning_expected": null,
+    "centralization_threshold": 0.4,
+    "auditable_metadata_schema_version": "1.0",
+    "audit_log_path": "output/runs/643ad140-ec65-4fcc-bef5-9e49c4c77215/audit.log"
+  },
+  "run_level": {
+    "total_runtime_s": 195.8,
+    "tokens_prompt": null,
+    "tokens_completion": null,
+    "tokens_total": null,
+    "neo4j_persistence_ok": false,
+    "phases_completed": 9,
+    "agents_invoked": 9,
+    "errors": []
+  },
+  "verdict": {
+    "dr1": "FAIL",
+    "dr2": "PASS",
+    "dr3": "OBSERVATIONAL",
+    "dr4": "OBSERVATIONAL",
+    "dr5": "FAIL",
+    "dr6": "PASS",
+    "overall": "FAIL",
+    "verdict_basis": "DR1–DR6 evaluation thresholds, Serrano et al. (2026)"
+  }
+}

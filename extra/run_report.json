@@ -1,0 +1,145 @@
+{
+  "run_id": "8638f74a-6d46-4aca-aecc-723c9f54f66d",
+  "timestamp_iso": "2026-05-14T15:55:08.878076+00:00",
+  "artifact_version": "V4",
+  "run_mode": "controlled",
+  "topic": "Consulting service development with modularity",
+  "domain": "other",
+  "corpus_profile": "natural",
+  "dr1": {
+    "lens_count": 4,
+    "lens_titles": [
+      "Knowledge Productization Flux",
+      "Interface Dependency Friction",
+      "Billable Hour Erosion",
+      "Client-Consultant Power Symmetry"
+    ],
+    "lens_embeddings_model": "scibert-scivocab-uncased",
+    "pairwise_cosine": [
+      [
+        1.0,
+        0.8948,
+        0.9215,
+        0.885
+      ],
+      [
+        0.8948,
+        1.0,
+        0.8971,
+        0.8951
+      ],
+      [
+        0.9215,
+        0.8971,
+        1.0,
+        0.9145
+      ],
+      [
+        0.885,
+        0.8951,
+        0.9145,
+        1.0
+      ]
+    ],
+    "mean_pairwise_cosine": 0.9013,
+    "max_pairwise_cosine": 0.9215,
+    "min_pairwise_cosine": 0.885,
+    "lens_jaccard_term_overlap": 0.0,
+    "lens_traditions_declared": [
+      "Knowledge Management / Product Management",
+      "Systems Theory / Software Engineering",
+      "Political Economy / Critical Management Studies",
+      "Sociology of Organizations / Agency Theory"
+    ],
+    "fallback_executed": false
+  },
+  "dr2": {
+    "edge_type_counts": {
+      "constructive": 6,
+      "critical": 2,
+      "rhizomatic": 2
+    },
+    "edge_type_ratios": {
+      "constructive": 0.6,
+      "critical": 0.2,
+      "rhizomatic": 0.2
+    },
+    "has_critical_edges": true,
+    "has_rhizomatic_edges": true,
+    "edge_type_entropy": 1.371,
+    "edges_with_provenance": 10,
+    "edges_total": 10,
+    "provenance_completeness": 1.0
+  },
+  "dr3": {
+    "centralization_metric": 0.45,
+    "rupture_trigger": true,
+    "rupture_trigger_expected": null,
+    "trigger_latency_s": null,
+    "post_trigger_sources_added": 9,
+    "post_trigger_centralization": null
+  },
+  "dr4": {
+    "llm_recruitment_path_executed": true,
+    "deterministic_fallback_executed": false,
+    "fallback_trigger_reason": "none",
+    "fallback_latency_s": null,
+    "sources_added_by_path": {
+      "llm": 9,
+      "deterministic": 0
+    },
+    "every_added_source_has_recruitment_path_provenance": true
+  },
+  "dr5": {
+    "umap_params": {
+      "n_neighbors": 15,
+      "min_dist": 0.1,
+      "n_components": 2
+    },
+    "hdbscan_params": {
+      "min_cluster_size": 5
+    },
+    "clusters_detected": 2,
+    "semantic_voids_detected": 0,
+    "orthogonal_isolations": 0,
+    "marginalization_index": 2,
+    "rendered_ui_tabs": [
+      "entry",
+      "modules",
+      "resonance",
+      "assemblage",
+      "cartography",
+      "graph",
+      "topography"
+    ],
+    "all_seven_tabs_populated": true
+  },
+  "dr6": {
+    "provenance_completeness": 1.0,
+    "centralization_warning_fired": true,
+    "centralization_warning_expected": null,
+    "centralization_threshold": 0.4,
+    "auditable_metadata_schema_version": "1.0",
+    "audit_log_path": "output/runs/8638f74a-6d46-4aca-aecc-723c9f54f66d/audit.log"
+  },
+  "run_level": {
+    "total_runtime_s": 144.3,
+    "tokens_prompt": null,
+    "tokens_completion": null,
+    "tokens_total": null,
+    "neo4j_persistence_ok": false,
+    "phases_completed": 9,
+    "agents_invoked": 9,
+    "errors": []
+  },
+  "verdict": {
+    "dr1": "FAIL",
+    "dr2": "PASS",
+    "dr3": "OBSERVATIONAL",
+    "dr4": "OBSERVATIONAL",
+    "dr5": "FAIL",
+    "dr6": "PASS",
+    "overall": "FAIL",
+    "verdict_basis": "DR1–DR6 evaluation thresholds, Serrano et al. (2026)"
+  }
+}
